@@ -4,7 +4,7 @@ mkdir -p ./config
 cat > ./config/config.properties <<EOF
 # Client Configuration
 news.analyze.server.host=${NEWS_ANALYZE_SERVER_HOST}
-news.analyze.server.port=${NEWS_ANALYZE_SERVER_PROT}
+news.analyze.server.port=${NEWS_ANALYZE_SERVER_PORT}
 scheduler.message-send.intervalInMs=${SEND_MESSAGE_INTERVAL_IN_MS}
 EOF
 
