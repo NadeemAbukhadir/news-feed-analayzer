@@ -2,10 +2,15 @@
 setlocal EnableDelayedExpansion
 
 :: Configuration PROPERTIES
-set SERVER_PORT=5001
-set SERVER_HOST=localhost
-set SERVER_CONNECTIONS_POOL_SIZE=5
-set CLIENT_MESSAGE_SCHEDULER_INTERVAL_MS=2000
+:: PROPERTIES PROPERTIES - port property is used in both apps
+set SERVER_PORT=8080
+set SERVER_CONNECTIONS_POOL_SIZE=10
+set NEWS_SUMMARY_REPORT_PERIOD_IN_SECONDS=10
+:: CLIENT PROPERTIES
+set NEWS_ANALYZE_SERVER_HOST=localhost
+set NEWS_ANALYZE_SERVER_PORT=8080
+set SEND_MESSAGE_INTERVAL_IN_MS=200
+
 
 :: PREPARATION SECTION
 netstat -ano | findstr ":%SERVER_PORT%" > nul && (
@@ -34,7 +39,7 @@ if not exist "mock-news-feed-client\target\mock-news-feed-client-1.0-SNAPSHOT-ja
 
 :: SERVER STARTUP (Visible Console Window)
 echo Starting News Analyzer Server...
-start "NewsAnalyzerServer" cmd /k "java -Dserver.port=%SERVER_PORT% -Dserver.connectionsPoolSize=%SERVER_CONNECTIONS_POOL_SIZE% -jar server\target\server-1.0-SNAPSHOT-jar-with-dependencies.jar"
+start "NewsAnalyzerServer" cmd /k "java -Dserver.port=%SERVER_PORT% -Dserver.connectionsPoolSize=%SERVER_CONNECTIONS_POOL_SIZE% -Dscheduler.news-summary-report.periodInSeconds=%NEWS_SUMMARY_REPORT_PERIOD_IN_SECONDS% -jar server\target\server-1.0-SNAPSHOT-jar-with-dependencies.jar"
 
 :: Wait for server initialization
 echo Waiting for server startup...
@@ -56,7 +61,7 @@ if not defined SERVER_READY (
 :: CLIENT DEPLOYMENT (Visible Console Windows)
 for /L %%i in (1,1,%SERVER_CONNECTIONS_POOL_SIZE%) do (
     echo Starting Client instance %%i...
-    start "MockNewsClient_%%i" cmd /k "java -Dserver.host=%SERVER_HOST% -Dserver.port=%SERVER_PORT% -Dscheduler.message-send.intervalInMs=%CLIENT_MESSAGE_SCHEDULER_INTERVAL_MS% -jar mock-news-feed-client\target\mock-news-feed-client-1.0-SNAPSHOT-jar-with-dependencies.jar"
+    start "MockNewsClient_%%i" cmd /k "java -Dserver.host=%NEWS_ANALYZE_SERVER_HOST% -Dserver.port=%NEWS_ANALYZE_SERVER_PORT% -Dscheduler.message-send.intervalInMs=%SEND_MESSAGE_INTERVAL_IN_MS% -jar mock-news-feed-client\target\mock-news-feed-client-1.0-SNAPSHOT-jar-with-dependencies.jar"
 )
 
 :: OUTPUT

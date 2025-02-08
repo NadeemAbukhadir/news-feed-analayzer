@@ -14,7 +14,7 @@ public class ServerApplication {
     public static void main(String[] args) {
 
         PropertiesManager.initialize("config.properties");
-        final int port = PropertiesManager.getInt("server.port", 5000);
+        final int port = PropertiesManager.getInt("server.port", 8080);
         final int threadPoolSize = PropertiesManager.getInt("server.connectionsPoolSize", 10);
         final int periodInSeconds = PropertiesManager.getInt("scheduler.news-summary-report.periodInSeconds", 10);
 
