@@ -13,9 +13,9 @@ public class MockNewsServiceApplication {
     public static void main(String[] args) {
 
         PropertiesManager.initialize("config.properties");
-        final int serverPort = PropertiesManager.getInt("server.port", 5000);
-        final String serverHost = PropertiesManager.get("server.host", "localhost");
-        final int messageSendIntervalInMs = PropertiesManager.getInt("scheduler.message-send.intervalInMs", 3000);
+        final int serverPort = PropertiesManager.getInt("news.analyze.server.port", 8080);
+        final String serverHost = PropertiesManager.get("news.analyze.server.host", "localhost");
+        final int messageSendIntervalInMs = PropertiesManager.getInt("scheduler.message-send.intervalInMs", 200);
 
         NewsItemMapper mapper = new NewsItemMapper();
         NewsContentGenerator generator = new NewsContentGenerator();

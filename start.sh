@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# Configuration properties
-export SERVER_PORT=5001
-export SERVER_HOST="localhost"
-# Also, determines the number of deployed client instances.
-export SERVER_CONNECTIONS_POOL_SIZE=5
-export CLIENT_MESSAGE_SCHEDULER_INTERVAL_MS=2000
+# Configuration PROPERTIES
+# PROPERTIES PROPERTIES - port property is used in both apps
+set SERVER_PORT=8080
+set SERVER_CONNECTIONS_POOL_SIZE=10
+set NEWS_SUMMARY_REPORT_PERIOD_IN_SECONDS=10
+# CLIENT PROPERTIES
+set NEWS_ANALYZE_SERVER_HOST=localhost
+set NEWS_ANALYZE_SERVER_PORT=8080
+set SEND_MESSAGE_INTERVAL_IN_MS=200
 
 # Preparation section
 if netstat -tuln | grep -q ":$SERVER_PORT "; then
@@ -35,7 +38,7 @@ fi
 # Server startup
 echo "Starting News Analyzer Server..."
 gnome-terminal --title="NewsAnalyzerServer" -- bash -c \
-    "java -Dserver.port=$SERVER_PORT -Dserver.connectionsPoolSize=$SERVER_CONNECTIONS_POOL_SIZE -jar server/target/server-1.0-SNAPSHOT-jar-with-dependencies.jar; exec bash"
+    "java -Dserver.port=$SERVER_PORT -Dserver.connectionsPoolSize=$SERVER_CONNECTIONS_POOL_SIZE -dscheduler.news-summary-report.periodInSeconds=$NEWS_SUMMARY_REPORT_PERIOD_IN_SECONDS -jar server/target/server-1.0-SNAPSHOT-jar-with-dependencies.jar; exec bash"
 
 # Wait for server initialization
 echo "Waiting for server startup..."
@@ -57,7 +60,7 @@ fi
 for ((i=1; i<=SERVER_CONNECTIONS_POOL_SIZE; i++)); do
     echo "Starting Client instance $i..."
     gnome-terminal --title="MockNewsClient_$i" -- bash -c \
-        "java -Dserver.host=$SERVER_HOST -Dserver.port=$SERVER_PORT -Dscheduler.message-send.intervalInMs=$CLIENT_MESSAGE_SCHEDULER_INTERVAL_MS -jar mock-news-feed-client/target/mock-news-feed-client-1.0-SNAPSHOT-jar-with-dependencies.jar; exec bash"
+        "java -Dserver.host=$NEWS_ANALYZE_SERVER_HOST -Dserver.port=$NEWS_ANALYZE_SERVER_PORT -Dscheduler.message-send.intervalInMs=$SEND_MESSAGE_INTERVAL_IN_MS -jar mock-news-feed-client/target/mock-news-feed-client-1.0-SNAPSHOT-jar-with-dependencies.jar; exec bash"
 done
 
 # Final output
