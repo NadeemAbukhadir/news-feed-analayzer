@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ServerApplication {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         PropertiesManager.initialize("config.properties");
         final int port = PropertiesManager.getInt("server.port", 5000);

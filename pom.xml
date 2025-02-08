@@ -19,8 +19,8 @@
 
     <modules>
         <module>common</module>
-        <module>mock-news-feed-client</module>
         <module>server</module>
+        <module>mock-news-feed-client</module>
     </modules>
 
     <dependencies>
