@@ -40,7 +40,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.tick.ts.server.ServerApplication</mainClass>
+                            <mainClass>com.github.nadeemabukhadir.news_analyzer.server.ServerApplication</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

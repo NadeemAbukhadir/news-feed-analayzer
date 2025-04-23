@@ -9,4 +9,4 @@ EOF
 
 #exec java -jar app.jar
 # Run with config directory first in classpath
-exec java -cp "app.jar:./config" de.tick.ts.server.ServerApplication
+exec java -cp "app.jar:./config" com.github.nadeemabukhadir.server.ServerApplication
