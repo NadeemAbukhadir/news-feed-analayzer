@@ -1,4 +1,4 @@
-# Mock News Analyzer
+# News Feed Analyzer
 
 * [Mock News Analyzer](#mock-news-analyzer)
   * [Overview](#overview)
