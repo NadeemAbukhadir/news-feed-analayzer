@@ -122,8 +122,8 @@ Compose**.
 | `NEWS_ANALYZE_SERVER_PORT`              | Port of the News Analyzer Server.                          | `8080`        |
 | `SEND_MESSAGE_INTERVAL_IN_MS`           | Interval (in milliseconds) between sending news messages.  | `200`         |
 
-These values can be modified in **deployment scripts (`start.sh`, `start.bat`)** or within the **Docker Compose
-file (`docker-compose.yml`)**.
+These values can be modified in your environment setup for direct execution or within the **Docker Compose
+file (`docker-compose.yaml`)**.
 
 ---
 
@@ -131,8 +131,8 @@ file (`docker-compose.yml`)**.
 
 This section outlines two approaches for building and deploying the **Mock News Analyzer** system:
 
-1. **Local Deployment** – Using manual scripts (`start.sh`/`stop.sh` for Linux/Mac, `start.bat`/`stop.bat` for Windows).
-2. **Containerized Deployment** – Using **Docker & Docker Compose** for a fully containerized environment.
+1. **Local Deployment** – Direct execution of JAR files for development and testing.
+2. **Containerized Deployment** – Using **Docker & Docker Compose** for a fully containerized environment (recommended).
 
 ### Local Deployment (Using Scripts)
 
